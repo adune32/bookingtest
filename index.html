@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harker Consulting - Prototype v9.1</title>
+    <style>
+        body { font-family: -apple-system, sans-serif; background-color: #111; color: #fff; max-width: 500px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
+        .admin-panel { background: #222; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ff4444; }
+        .setup-panel { background: #1a1a2e; padding: 15px; border-radius: 8px; border: 1px solid #4a4e69; margin-bottom: 10px; }
+        
+        .slot { background: #333; padding: 15px; margin-bottom: 5px; border-radius: 5px; cursor: pointer; border-left: 4px solid #444; }
+        .slot.booked { background: #552222; cursor: default; border-left: 4px solid #ff4444; }
+        .slot.booked-sub { background: #3a1a1a; padding: 5px 15px; font-size: 0.8em; color: #888; border-left: 4px solid #ff4444; cursor: default; }
+        .slot.buffer { background: #2a2a2a; padding: 8px 15px; font-size: 0.85em; color: #f0ad4e; border-left: 4px solid #f0ad4e; cursor: default; }
+        
+        .slot-header { display: flex; justify-content: space-between; align-items: center; }
+        .slot-actions { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+        
+        button { background: #444; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-action { background: #225588; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
+        .btn-notes { background: #558822; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%;}
+        .btn-ready { background: #228855; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
+        .btn-delay { background: #b85b20; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
+        .btn-move { background: #6a4a8e; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
+        .btn-cancel-slot { background: #882222; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
+        .btn-setup { background: #4a4e69; margin-bottom: 0; }
+        button:active { filter: brightness(0.8); }
+        
+        input { background: #333; color: white; border: 1px solid #555; padding: 8px; border-radius: 4px; width: 60px; margin-right: 10px; }
+        .price-input { width: 100px; margin: 0; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #333; padding: 8px; border-radius: 5px; }
+        textarea { background: #333; color: white; border: 1px solid #555; padding: 8px; border-radius: 4px; width: 100%; box-sizing: border-box; height: 70px; resize: none; font-family: inherit; font-size: 0.9em; }
+
+        /* Modal Styles */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 100; }
+        .modal-content { background: #222; padding: 20px; border-radius: 10px; width: 90%; max-width: 350px; border: 1px solid #444; text-align: center; max-height: 90vh; overflow-y: auto; }
+        .duration-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .btn-duration { background: #333; border: 1px solid #555; font-size: 1.1em; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+        .btn-cancel-modal { background: transparent; color: #888; margin-top: 15px; padding: 10px; }
+        
+        .has-note { color: #88cc44; font-size: 0.8em; margin-left: 10px; }
+    </style>
+</head>
+<body>
+
+    <button onclick="toggleView()" id="viewToggle" style="margin-bottom: 10px;">Currently viewing as: ADMIN</button>
+
+    <div class="header">
+        <h2>Harker Consulting</h2>
+        <p id="subtext" style="color: #888; font-size: 0.9em;">Discreet Booking Grid</p>
+    </div>
+
+    <!-- Admin Controls -->
+    <div id="adminControls">
+        <div class="setup-panel">
+            <p style="margin-top: 0; color: #8a8ebd; font-size: 0.8em; text-transform: uppercase;">1. Set Availability & Rates</p>
+            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                Start (24h): <input type="number" id="startHour" value="20" min="0" max="23">
+                Hours: <input type="number" id="durationHours" value="4" min="1" max="12">
+            </div>
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button class="btn-setup" onclick="generateShift()">⚙️ Generate Grid</button>
+                <button class="btn-setup" style="background: #2a6f44;" onclick="openPriceModal()">💰 Set Prices</button>
+            </div>
+            <button class="btn-setup" style="background: #6a4a8e; width: 100%;" onclick="openTemplateModal()">📝 Edit Message Templates</button>
+        </div>
+
+        <div class="admin-panel">
+            <p style="margin-top: 0; color: #ff4444; font-size: 0.8em; text-transform: uppercase;">2. Active Shift Controls</p>
+            <button class="btn-action" style="margin-bottom: 10px; width: 100%;" onclick="copyGlobalLink()">📋 Copy Shift Link</button>
+            <button onclick="wipeShift()" style="margin-bottom: 0; background: #882222;">🗑️ End Shift (Wipe Data)</button>
+        </div>
+    </div>
+
+    <!-- The Booking Grid -->
+    <div id="grid"></div>
+
+    <!-- Duration Picker Modal (Client) -->
+    <div class="modal-overlay" id="durationModal">
+        <div class="modal-content">
+            <h3>Select Duration</h3>
+            <p style="color: #888; font-size: 0.9em; margin-top: 0;">Includes 15m buffer automatically.</p>
+            <div class="duration-grid" id="durationGrid"></div>
+            <button class="btn-cancel-modal" onclick="closeModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Move Booking Modal (Admin) -->
+    <div class="modal-overlay" id="moveModal">
+        <div class="modal-content">
+            <h3>Reschedule Client</h3>
+            <p id="moveClientSubtitle" style="color: #888; font-size: 0.85em; margin-top: 0;"></p>
+            <div class="duration-grid" id="moveGrid" style="grid-template-columns: 1fr;"></div>
+            <button class="btn-cancel-modal" onclick="closeMoveModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Pricing Configuration Modal (Admin) -->
+    <div class="modal-overlay" id="priceModal">
+        <div class="modal-content">
+            <h3>Configure Rates</h3>
+            <div style="text-align: left; margin-top: 15px;">
+                <div class="price-row"><span>15 Mins:</span> <input type="text" id="price-15" class="price-input" placeholder="Optional"></div>
+                <div class="price-row"><span>30 Mins:</span> <input type="text" id="price-30" class="price-input" placeholder="Optional"></div>
+                <div class="price-row"><span>45 Mins:</span> <input type="text" id="price-45" class="price-input" placeholder="Optional"></div>
+                <div class="price-row"><span>1 Hour:</span> <input type="text" id="price-60" class="price-input" placeholder="Optional"></div>
+                <div class="price-row"><span>1.5 Hours:</span> <input type="text" id="price-90" class="price-input" placeholder="Optional"></div>
+                <div class="price-row"><span>2 Hours:</span> <input type="text" id="price-120" class="price-input" placeholder="Optional"></div>
+            </div>
+            <button class="btn-action" style="margin-top: 15px; width: 100%;" onclick="savePrices()">Save Rates</button>
+            <button class="btn-cancel-modal" onclick="closePriceModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Message Templates Modal (Admin) -->
+    <div class="modal-overlay" id="templateModal">
+        <div class="modal-content">
+            <h3>Message Templates</h3>
+            <div style="text-align: left; margin-top: 15px;">
+                <p style="font-size: 0.8em; color: #aaa; margin-bottom: 5px;">"Ready" Text:</p>
+                <textarea id="templateReady">Hi, I'm ready for you. Head over to [Location / Buzz Code]. See you soon!</textarea>
+                
+                <p style="font-size: 0.8em; color: #aaa; margin-top: 15px; margin-bottom: 5px;">"Delay Notification" Text:</p>
+                <textarea id="templateDelay">Update: Running a bit behind. Can we push your block to {time}? Let me know if that works!</textarea>
+            </div>
+            <button class="btn-action" style="margin-top: 15px; width: 100%;" onclick="saveTemplates()">Save Templates</button>
+            <button class="btn-cancel-modal" onclick="closeTemplateModal()">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        let currentView = 'admin'; 
+        let slots = []; 
+        let clientNotesDB = {}; 
+        const baseIncrement = 15; 
+        let pendingStartIndex = null; 
+        let activeMovingAlias = null; 
+
+        let prices = { 15: "", 30: "", 45: "", 60: "", 90: "", 120: "" };
+        const durationLabels = { 15: "15 Mins", 30: "30 Mins", 45: "45 Mins", 60: "1 Hour", 90: "1.5 Hours", 120: "2 Hours" };
+
+        let templates = {
+            ready: "Hi, I'm ready for you. Head over to [Location / Buzz Code]. See you soon!",
+            delay: "Update: Running a bit behind. Can we push your block to {time}? Let me know if that works!"
+        };
+
+        function formatTime(totalMinutes) {
+            let h = Math.floor(totalMinutes / 60) % 24;
+            let m = totalMinutes % 60;
+            let ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12 || 12;
+            return `${h}:${m.toString().padStart(2, '0')} ${ampm}`;
+        }
+
+        function openPriceModal() {
+            Object.keys(prices).forEach(key => document.getElementById(`price-${key}`).value = prices[key]);
+            document.getElementById('priceModal').style.display = 'flex';
+        }
+        function closePriceModal() { document.getElementById('priceModal').style.display = 'none'; }
+        function savePrices() {
+            Object.keys(prices).forEach(key => prices[key] = document.getElementById(`price-${key}`).value.trim());
+            closePriceModal();
+            alert("Rates updated securely.");
+        }
+
+        function openTemplateModal() {
+            document.getElementById('templateReady').value = templates.ready;
+            document.getElementById('templateDelay').value = templates.delay;
+            document.getElementById('templateModal').style.display = 'flex';
+        }
+        function closeTemplateModal() { document.getElementById('templateModal').style.display = 'none'; }
+        function saveTemplates() {
+            templates.ready = document.getElementById('templateReady').value.trim();
+            templates.delay = document.getElementById('templateDelay').value.trim();
+            closeTemplateModal();
+            alert("Templates updated.");
+        }
+
+        function generateShift() {
+            if(slots.length > 0 && slots.some(s => s.alias) && !confirm("Warning: Erase booked clients and generate new grid?")) return;
+            const startHour = parseInt(document.getElementById('startHour').value);
+            const duration = parseInt(document.getElementById('durationHours').value);
+            slots = [];
+            const totalBlocks = (duration * 60) / baseIncrement;
+            for(let i = 0; i < totalBlocks; i++) {
+                slots.push({ time: (startHour * 60) + (i * baseIncrement), alias: null, isMainSlot: false, isBuffer: false });
+            }
+            render();
+        }
+
+        function toggleView() {
+            currentView = currentView === 'admin' ? 'client' : 'admin';
+            document.getElementById('viewToggle').innerText = `Currently viewing as: ${currentView.toUpperCase()}`;
+            document.getElementById('adminControls').style.display = currentView === 'admin' ? 'block' : 'none';
+            document.getElementById('subtext').innerText = currentView === 'admin' ? 'Master Schedule' : 'Select your start time';
+            render();
+        }
+
+        function copyGlobalLink() { alert("Copied: harkerconsulting.com/book?token=eyJhb..."); }
+
+        function copyReadyText() {
+            navigator.clipboard.writeText(templates.ready).then(() => alert(`Copied to clipboard:\n\n"${templates.ready}"`));
+        }
+
+        function manageNotes(alias) {
+            const existingNote = clientNotesDB[alias] || "";
+            const newNote = prompt(`Admin Notes for [${alias}]:\n(Rule: No real names or PII)\n\nEdit or add notes below:`, existingNote);
+            if (newNote !== null) { 
+                if (newNote.trim() === "") delete clientNotesDB[alias];
+                else clientNotesDB[alias] = newNote.trim();
+                render(); 
+            }
+        }
+
+        function delayClient(targetAlias) {
+            let mainIndex = slots.findIndex(s => s.alias === targetAlias && s.isMainSlot);
+            if (mainIndex === -1) return;
+
+            let blockCount = 0;
+            let hasBuffer = false;
+            for (let i = mainIndex; i < slots.length; i++) {
+                if (slots[i].alias === targetAlias || slots[i].isBuffer) {
+                    blockCount++;
+                    if (slots[i].isBuffer) hasBuffer = true;
+                } else {
+                    break;
+                }
+            }
+
+            if (mainIndex + blockCount >= slots.length) {
+                alert("Cannot delay: Client is at the very end of the shift boundary.");
+                return;
+            }
+
+            let oldTimes = [];
+            for (let i = 0; i < blockCount; i++) {
+                oldTimes.push({ alias: slots[mainIndex + i].alias, isMain: slots[mainIndex + i].isMainSlot, isBuf: slots[mainIndex + i].isBuffer });
+                slots[mainIndex + i].alias = null;
+                slots[mainIndex + i].isMainSlot = false;
+                slots[mainIndex + i].isBuffer = false;
+            }
+
+            for (let i = 0; i < blockCount; i++) {
+                slots[mainIndex + 1 + i].alias = oldTimes[i].alias;
+                slots[mainIndex + 1 + i].isMainSlot = oldTimes[i].isMain;
+                slots[mainIndex + 1 + i].isBuffer = oldTimes[i].isBuf;
+            }
+
+            let newTimeStr = formatTime(slots[mainIndex + 1].time);
+            let text = templates.delay.replace('{time}', newTimeStr);
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`Client pushed +15 mins.\nCopied text to clipboard:\n\n"${text}"`);
+                render();
+            });
+        }
+
+        function openMoveModal(targetAlias) {
+            activeMovingAlias = targetAlias;
+            document.getElementById('moveClientSubtitle').innerText = `Rescheduling booking for [${targetAlias}]`;
+            
+            const moveGrid = document.getElementById('moveGrid');
+            moveGrid.innerHTML = '';
+
+            slots.forEach((slot, index) => {
+                if (!slot.alias) {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-duration';
+                    btn.style.width = '100%';
+                    btn.innerText = `Move to ${formatTime(slot.time)}`;
+                    btn.onclick = () => executeMove(index);
+                    moveGrid.appendChild(btn);
+                }
+            });
+
+            document.getElementById('moveModal').style.display = 'flex';
+        }
+
+        function closeMoveModal() {
+            document.getElementById('moveModal').style.display = 'none';
+            activeMovingAlias = null;
+        }
+
+        function executeMove(newStartIndex) {
+            let targetAlias = activeMovingAlias;
+            let mainIndex = slots.findIndex(s => s.alias === targetAlias && s.isMainSlot);
+            if (mainIndex === -1) { closeMoveModal(); return; }
+
+            let clientBlocks = [];
+            let hasBuffer = false;
+            for (let i = mainIndex; i < slots.length; i++) {
+                if (slots[i].alias === targetAlias) {
+                    clientBlocks.push({ isMain: slots[i].isMainSlot });
+                } else if (slots[i].isBuffer) {
+                    hasBuffer = true;
+                    break;
+                } else {
+                    break;
+                }
+            }
+
+            let totalNeeded = hasBuffer ? clientBlocks.length + 1 : clientBlocks.length;
+
+            if (newStartIndex + totalNeeded > slots.length) {
+                alert("Not enough room left in shift for this duration at that time.");
+                return;
+            }
+            for (let i = 0; i < totalNeeded; i++) {
+                let checkIdx = newStartIndex + i;
+                if (slots[checkIdx].alias !== null && slots[checkIdx].alias !== targetAlias && !slots[checkIdx].isBuffer) {
+                    alert("Selected time slot overlaps with another booking.");
+                    return;
+                }
+            }
+
+            for (let i = 0; i < slots.length; i++) {
+                if (slots[i].alias === targetAlias || (slots[i].isBuffer && i > mainIndex && i <= mainIndex + clientBlocks.length + 1)) {
+                    slots[i].alias = null;
+                    slots[i].isMainSlot = false;
+                    slots[i].isBuffer = false;
+                }
+            }
+
+            for (let i = 0; i < clientBlocks.length; i++) {
+                slots[newStartIndex + i].alias = targetAlias;
+                slots[newStartIndex + i].isMainSlot = clientBlocks[i].isMain;
+                slots[newStartIndex + i].isBuffer = false;
+            }
+            if (hasBuffer && newStartIndex + clientBlocks.length < slots.length) {
+                slots[newStartIndex + clientBlocks.length].alias = 'BUFFER';
+                slots[newStartIndex + clientBlocks.length].isMainSlot = false;
+                slots[newStartIndex + clientBlocks.length].isBuffer = true;
+            }
+
+            closeMoveModal();
+            render();
+            alert(`Successfully rescheduled [${targetAlias}] to ${formatTime(slots[newStartIndex].time)}`);
+        }
+
+        function cancelBooking(targetAlias) {
+            if(confirm(`Are you sure you want to delete the booking for [${targetAlias}]?`)) {
+                let clearing = false;
+                for (let i = 0; i < slots.length; i++) {
+                    if (slots[i].alias === targetAlias) {
+                        slots[i].alias = null;
+                        slots[i].isMainSlot = false;
+                        clearing = true;
+                    } else if (clearing && slots[i].isBuffer) {
+                        slots[i].alias = null;
+                        slots[i].isBuffer = false;
+                        break;
+                    } else if (clearing) {
+                        break;
+                    }
+                }
+                render();
+            }
+        }
+
+        function openDurationModal(startIndex) {
+            pendingStartIndex = startIndex;
+            const grid = document.getElementById('durationGrid');
+            grid.innerHTML = ''; 
+
+            [15, 30, 45, 60, 90, 120].forEach(mins => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-duration';
+                const timeSpan = document.createElement('span');
+                timeSpan.innerText = durationLabels[mins];
+                btn.appendChild(timeSpan);
+
+                if (prices[mins]) {
+                    const priceSpan = document.createElement('span');
+                    priceSpan.style.color = '#88cc44';
+                    priceSpan.style.fontSize = '0.8em';
+                    priceSpan.innerText = prices[mins];
+                    btn.appendChild(priceSpan);
+                }
+                btn.onclick = () => processBooking(mins);
+                grid.appendChild(btn);
+            });
+            document.getElementById('durationModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('durationModal').style.display = 'none';
+            pendingStartIndex = null;
+        }
+
+        function processBooking(requestedMins) {
+            const startIndex = pendingStartIndex;
+            const blocksNeeded = requestedMins / baseIncrement;
+            let requiresBuffer = (startIndex + blocksNeeded < slots.length);
+            let totalBlocksNeeded = requiresBuffer ? blocksNeeded + 1 : blocksNeeded;
+
+            if (startIndex + totalBlocksNeeded > slots.length) {
+                alert("Not enough time left in shift for that duration plus buffer.");
+                closeModal(); return;
+            }
+
+            for(let i = 0; i < totalBlocksNeeded; i++) {
+                if (slots[startIndex + i].alias !== null) {
+                    alert("This duration overlaps with an existing booking.");
+                    closeModal(); return;
+                }
+            }
+
+            closeModal();
+            const alias = prompt(`Space verified. Enter alias to claim ${requestedMins} minutes at ${formatTime(slots[startIndex].time)}:`);
+            if (alias) {
+                for(let i = 0; i < blocksNeeded; i++) {
+                    slots[startIndex + i].alias = alias;
+                    slots[startIndex + i].isMainSlot = (i === 0);
+                    slots[startIndex + i].isBuffer = false;
+                }
+                if (requiresBuffer) {
+                    slots[startIndex + blocksNeeded].alias = 'BUFFER';
+                    slots[startIndex + blocksNeeded].isMainSlot = false;
+                    slots[startIndex + blocksNeeded].isBuffer = true;
+                }
+                render();
+            }
+        }
+
+        function render() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = ''; 
+
+            if(slots.length === 0) {
+                grid.innerHTML = '<p style="text-align:center; color:#555;">No shift generated. Use Admin tools to set availability.</p>';
+                return;
+            }
+
+            slots.forEach((slot, index) => {
+                if (currentView === 'client' && slot.alias) return;
+
+                const div = document.createElement('div');
+                
+                if (slot.isBuffer && currentView === 'admin') {
+                    div.className = 'slot buffer';
+                    div.innerText = '🧹 15m Prep & Clean (Buffer)';
+                    grid.appendChild(div); return; 
+                }
+
+                if (slot.alias && !slot.isMainSlot && currentView === 'admin') {
+                    div.className = 'slot booked-sub';
+                    div.innerText = '↳ Continuing...';
+                    grid.appendChild(div); return; 
+                }
+
+                div.className = `slot ${slot.alias ? 'booked' : ''}`;
+                const headerDiv = document.createElement('div');
+                headerDiv.className = 'slot-header';
+
+                const timeText = document.createElement('span');
+                timeText.innerText = formatTime(slot.time);
+                
+                const hasNote = clientNotesDB[slot.alias] ? '<span class="has-note">📝 Has Notes</span>' : '';
+                const statusText = document.createElement('span');
+                statusText.innerHTML = slot.alias ? `Booked: ${slot.alias} ${currentView === 'admin' ? hasNote : ''}` : 'Available';
+
+                headerDiv.appendChild(timeText);
+                headerDiv.appendChild(statusText);
+                div.appendChild(headerDiv);
+
+                if (currentView === 'admin' && slot.alias && slot.isMainSlot) {
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'slot-actions';
+                    
+                    const delayBtn = document.createElement('button');
+                    delayBtn.className = 'btn-delay';
+                    delayBtn.innerText = '⏳ +15m Delay';
+                    delayBtn.onclick = (e) => { e.stopPropagation(); delayClient(slot.alias); };
+
+                    const readyBtn = document.createElement('button');
+                    readyBtn.className = 'btn-ready';
+                    readyBtn.innerText = '🟢 Ready';
+                    readyBtn.onclick = (e) => { e.stopPropagation(); copyReadyText(); };
+                    
+                    const moveBtn = document.createElement('button');
+                    moveBtn.className = 'btn-move';
+                    moveBtn.innerText = '🔄 Move';
+                    moveBtn.onclick = (e) => { e.stopPropagation(); openMoveModal(slot.alias); };
+
+                    const noteBtn = document.createElement('button');
+                    noteBtn.className = 'btn-notes';
+                    noteBtn.innerText = '📝 Notes';
+                    noteBtn.onclick = (e) => { e.stopPropagation(); manageNotes(slot.alias); };
+
+                    const cancelBtn = document.createElement('button');
+                    cancelBtn.className = 'btn-cancel-slot';
+                    cancelBtn.innerText = '❌ Cancel';
+                    cancelBtn.onclick = (e) => { e.stopPropagation(); cancelBooking(slot.alias); };
+                    
+                    actionsDiv.appendChild(delayBtn);
+                    actionsDiv.appendChild(readyBtn);
+                    actionsDiv.appendChild(moveBtn);
+                    actionsDiv.appendChild(noteBtn);
+                    actionsDiv.appendChild(cancelBtn);
+
+                    div.appendChild(actionsDiv);
+                }
+
+                if (!slot.alias) div.onclick = () => openDurationModal(index);
+                grid.appendChild(div);
+            });
+        }
+
+        function wipeShift() {
+            if (confirm("WARNING: Erase all data?")) {
+                slots = slots.map(slot => ({ ...slot, alias: null, isMainSlot: false, isBuffer: false }));
+                render();
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>
