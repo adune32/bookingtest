@@ -3,74 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Harker Consulting - Prototype v9.1</title>
+    <title>Chloe's Playhaus — Atelier</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background-color: #111; color: #fff; max-width: 500px; margin: 0 auto; padding: 20px; }
-        .header { text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 20px; }
-        .admin-panel { background: #222; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #ff4444; }
-        .setup-panel { background: #1a1a2e; padding: 15px; border-radius: 8px; border: 1px solid #4a4e69; margin-bottom: 10px; }
-        
-        .slot { background: #333; padding: 15px; margin-bottom: 5px; border-radius: 5px; cursor: pointer; border-left: 4px solid #444; }
-        .slot.booked { background: #552222; cursor: default; border-left: 4px solid #ff4444; }
-        .slot.booked-sub { background: #3a1a1a; padding: 5px 15px; font-size: 0.8em; color: #888; border-left: 4px solid #ff4444; cursor: default; }
-        .slot.buffer { background: #2a2a2a; padding: 8px 15px; font-size: 0.85em; color: #f0ad4e; border-left: 4px solid #f0ad4e; cursor: default; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-deep: #090410;
+            --glass-bg: rgba(26, 12, 42, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.18);
+            
+            --neon-purple: #9333ea;
+            --neon-pink: #ec4899;
+            --neon-orange: #f97316;
+            
+            --text-main: #fdf4ff;
+            --text-muted: #d8b4fe;
+            --text-dim: #9ca3af;
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; 
+            background-color: var(--bg-deep);
+            /* Organic, unevenly spaced glitter stardust dusting */
+            background-image: 
+                radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #f472b6, rgba(0,0,0,0)),
+                radial-gradient(1px 1.5px at 150px 120px, #e9d5ff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 220px 80px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 300px 200px, #f472b6, rgba(0,0,0,0)),
+                radial-gradient(2px 1px at 70px 280px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 2px at 350px 320px, #e9d5ff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 180px 400px, #f472b6, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 410px 150px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(circle at 15% 10%, rgba(236, 72, 153, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 85% 90%, rgba(249, 115, 22, 0.3) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.25) 0%, transparent 60%);
+            background-size: 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 450px 450px, 100% 100%, 100% 100%, 100% 100%;
+            background-attachment: fixed;
+            color: var(--text-main); 
+            max-width: 480px; 
+            margin: 0 auto; 
+            padding: 20px; 
+            min-height: 100vh;
+        }
+
+        /* Frosted Glass Header with Shimmer */
+        .header { 
+            text-align: center; 
+            padding: 28px 20px; 
+            margin-bottom: 25px; 
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid var(--glass-highlight);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '✨  💎  ✨';
+            position: absolute;
+            top: 6px;
+            right: 15px;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            opacity: 0.7;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.4; filter: drop-shadow(0 0 2px rgba(236,72,153,0.5)); }
+            100% { opacity: 0.9; filter: drop-shadow(0 0 8px rgba(236,72,153,0.9)); }
+        }
+
+        .header h2 {
+            margin: 0 0 6px 0;
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #fff 0%, #f472b6 50%, #fb923c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(236, 72, 153, 0.4);
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.8px;
+            font-weight: 300;
+        }
+
+        /* Glassmorphism Containers */
+        .admin-panel, .setup-panel { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            padding: 20px; 
+            border-radius: 20px; 
+            margin-bottom: 20px; 
+            border: 1px solid var(--glass-border); 
+            border-top: 1px solid var(--glass-highlight);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5); 
+        }
+
+        /* Slots Design matching the card styling */
+        .slot { 
+            background: var(--glass-bg); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 16px; 
+            margin-bottom: 10px; 
+            border-radius: 16px; 
+            cursor: pointer; 
+            border-left: 4px solid var(--neon-purple); 
+            border-top: 1px solid var(--glass-border); 
+            border-right: 1px solid var(--glass-border); 
+            border-bottom: 1px solid rgba(0,0,0,0.6);
+            transition: all 0.25s ease; 
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        .slot:hover { 
+            border-color: var(--neon-pink); 
+            background: rgba(45, 18, 66, 0.6); 
+            transform: translateY(-2px);
+        }
+        .slot.booked { 
+            background: linear-gradient(135deg, rgba(50, 10, 40, 0.75) 0%, rgba(20, 5, 25, 0.85) 100%);
+            border-left: 4px solid var(--neon-pink); 
+            border-color: rgba(236, 72, 153, 0.25); 
+            cursor: default; 
+        }
+        .slot.booked-sub { 
+            background: rgba(30, 5, 20, 0.5); 
+            padding: 8px 16px; 
+            font-size: 0.8rem; 
+            color: #f472b6; 
+            border-left: 4px solid var(--neon-pink); 
+            border-radius: 10px;
+            margin-bottom: 6px;
+            cursor: default; 
+        }
+        .slot.buffer { 
+            background: rgba(35, 20, 5, 0.5); 
+            padding: 10px 16px; 
+            font-size: 0.8rem; 
+            color: #fbbf24; 
+            border-left: 4px solid var(--neon-orange); 
+            border-radius: 10px;
+            margin-bottom: 6px;
+            cursor: default; 
+        }
         
         .slot-header { display: flex; justify-content: space-between; align-items: center; }
-        .slot-actions { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px; }
+        .slot-actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
         
-        button { background: #444; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; width: 100%; }
-        .btn-action { background: #225588; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
-        .btn-notes { background: #558822; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%;}
-        .btn-ready { background: #228855; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
-        .btn-delay { background: #b85b20; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
-        .btn-move { background: #6a4a8e; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
-        .btn-cancel-slot { background: #882222; padding: 8px; font-size: 0.8em; margin: 0; flex: 1; min-width: 45%; }
-        .btn-setup { background: #4a4e69; margin-bottom: 0; }
-        button:active { filter: brightness(0.8); }
+        /* Vibrant Neon Gradient Buttons with Glitter Glow */
+        button { 
+            background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%); 
+            color: var(--text-main); 
+            border: 1px solid rgba(255, 255, 255, 0.25); 
+            padding: 12px 16px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            font-size: 0.85rem;
+            width: 100%; 
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 20px rgba(147, 51, 234, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+        button:hover { 
+            filter: brightness(1.15);
+            box-shadow: 0 6px 25px rgba(236, 72, 153, 0.6), inset 0 1px 0 rgba(255,255,255,0.5);
+        }
         
-        input { background: #333; color: white; border: 1px solid #555; padding: 8px; border-radius: 4px; width: 60px; margin-right: 10px; }
-        .price-input { width: 100px; margin: 0; }
-        .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #333; padding: 8px; border-radius: 5px; }
-        textarea { background: #333; color: white; border: 1px solid #555; padding: 8px; border-radius: 4px; width: 100%; box-sizing: border-box; height: 70px; resize: none; font-family: inherit; font-size: 0.9em; }
+        .btn-action { background: linear-gradient(135deg, #7c3aed, #db2777); padding: 9px; font-size: 0.78rem; flex: 1; min-width: 45%; }
+        .btn-notes { background: linear-gradient(135deg, #059669, #0d9488); border-color: rgba(52, 211, 153, 0.3); padding: 9px; font-size: 0.78rem; flex: 1; min-width: 45%; }
+        .btn-ready { background: linear-gradient(135deg, #0d9488, #059669); border-color: rgba(52, 211, 153, 0.4); padding: 9px; font-size: 0.78rem; flex: 1; min-width: 45%; }
+        .btn-delay { background: linear-gradient(135deg, #ea580c, #c2410c); border-color: rgba(251, 146, 60, 0.3); padding: 9px; font-size: 0.78rem; flex: 1; min-width: 45%; }
+        .btn-move { background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-color: rgba(216, 180, 254, 0.3); padding: 9px; font-size: 0.78rem; flex: 1; min-width: 45%; }
+        .btn-cancel-slot { background: linear-gradient(135deg, #e11d48, #be123c); border-color: rgba(244, 63, 94, 0.3); padding: 9px; font-size: 0.78rem; flex: 1; min-width: 45%; }
+        .btn-setup { background: linear-gradient(135deg, #7c3aed, #4c1d95); margin-bottom: 0; }
+        button:active { transform: scale(0.98); }
+        
+        /* Inputs & Fields */
+        input, textarea { 
+            background: rgba(10, 5, 18, 0.7); 
+            color: var(--text-main); 
+            border: 1px solid rgba(255, 255, 255, 0.12); 
+            padding: 10px 12px; 
+            border-radius: 10px; 
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input:focus, textarea:focus { border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
+        input { width: 60px; margin-right: 10px; text-align: center; font-weight: 600; }
+        .price-input { width: 110px; margin: 0; text-align: left; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: rgba(30, 10, 45, 0.4); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--glass-border); }
+        textarea { width: 100%; box-sizing: border-box; height: 80px; resize: none; font-size: 0.9em; }
 
-        /* Modal Styles */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 100; }
-        .modal-content { background: #222; padding: 20px; border-radius: 10px; width: 90%; max-width: 350px; border: 1px solid #444; text-align: center; max-height: 90vh; overflow-y: auto; }
+        /* Floating Glass Modals */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 2, 10, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); align-items: center; justify-content: center; z-index: 100; }
+        .modal-content { background: rgba(26, 12, 42, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 25px; border-radius: 24px; width: 90%; max-width: 360px; border: 1px solid rgba(255, 255, 255, 0.2); text-align: center; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 40px rgba(147, 51, 234, 0.3); }
         .duration-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .btn-duration { background: #333; border: 1px solid #555; font-size: 1.1em; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
-        .btn-cancel-modal { background: transparent; color: #888; margin-top: 15px; padding: 10px; }
+        .btn-duration { background: rgba(45, 18, 66, 0.6); border: 1px solid rgba(255, 255, 255, 0.12); font-size: 1rem; padding: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 14px; }
+        .btn-duration:hover { border-color: var(--neon-pink); background: rgba(147, 51, 234, 0.4); }
+        .btn-cancel-modal { background: transparent; color: var(--text-dim); border: none; margin-top: 15px; padding: 10px; font-weight: 500; }
         
-        .has-note { color: #88cc44; font-size: 0.8em; margin-left: 10px; }
+        .has-note { color: #34d399; font-size: 0.75rem; margin-left: 8px; font-weight: 600; background: rgba(5, 150, 105, 0.25); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(52, 211, 153, 0.4); }
+        #viewToggle { background: linear-gradient(135deg, #9333ea, #ec4899); border: 1px solid rgba(255,255,255,0.35); margin-bottom: 20px; font-weight: 600; letter-spacing: 0.5px; box-shadow: 0 4px 20px rgba(236, 72, 153, 0.45); }
     </style>
 </head>
 <body>
 
-    <button onclick="toggleView()" id="viewToggle" style="margin-bottom: 10px;">Currently viewing as: ADMIN</button>
+    <button onclick="toggleView()" id="viewToggle">💎 Admin Atelier View</button>
 
     <div class="header">
-        <h2>Harker Consulting</h2>
-        <p id="subtext" style="color: #888; font-size: 0.9em;">Discreet Booking Grid</p>
+        <h2>✨ CHLOE'S PLAYHAUS ✨</h2>
+        <p id="subtext">Secure Executive Scheduling Atelier</p>
     </div>
 
     <!-- Admin Controls -->
     <div id="adminControls">
         <div class="setup-panel">
-            <p style="margin-top: 0; color: #8a8ebd; font-size: 0.8em; text-transform: uppercase;">1. Set Availability & Rates</p>
-            <div style="display: flex; align-items: center; margin-bottom: 10px;">
+            <p style="margin-top: 0; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">1. Schedule & Pricing Setup</p>
+            <div style="display: flex; align-items: center; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-dim);">
                 Start (24h): <input type="number" id="startHour" value="20" min="0" max="23">
                 Hours: <input type="number" id="durationHours" value="4" min="1" max="12">
             </div>
             <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                <button class="btn-setup" onclick="generateShift()">⚙️ Generate Grid</button>
-                <button class="btn-setup" style="background: #2a6f44;" onclick="openPriceModal()">💰 Set Prices</button>
+                <button class="btn-setup" onclick="generateShift()">📅 Set Schedule</button>
+                <button class="btn-setup" style="background: linear-gradient(135deg, #059669, #0d9488);" onclick="openPriceModal()">💎 Set Rates</button>
             </div>
-            <button class="btn-setup" style="background: #6a4a8e; width: 100%;" onclick="openTemplateModal()">📝 Edit Message Templates</button>
+            <button class="btn-setup" style="background: linear-gradient(135deg, #7c3aed, #db2777); width: 100%;" onclick="openTemplateModal()">📝 Message Templates</button>
         </div>
 
         <div class="admin-panel">
-            <p style="margin-top: 0; color: #ff4444; font-size: 0.8em; text-transform: uppercase;">2. Active Shift Controls</p>
-            <button class="btn-action" style="margin-bottom: 10px; width: 100%;" onclick="copyGlobalLink()">📋 Copy Shift Link</button>
-            <button onclick="wipeShift()" style="margin-bottom: 0; background: #882222;">🗑️ End Shift (Wipe Data)</button>
+            <p style="margin-top: 0; color: #f472b6; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">2. Live Operations</p>
+            <button class="btn-action" style="margin-bottom: 10px; width: 100%; background: linear-gradient(135deg, #9333ea, #7c3aed);" onclick="copyGlobalLink()">💌 Copy Invite Link</button>
+            <button onclick="wipeShift()" style="margin-bottom: 0; background: linear-gradient(135deg, #e11d48, #be123c); border-color: rgba(244,63,94,0.4);">🗑️ End Shift</button>
         </div>
     </div>
 
@@ -80,8 +257,8 @@
     <!-- Duration Picker Modal (Client) -->
     <div class="modal-overlay" id="durationModal">
         <div class="modal-content">
-            <h3>Select Duration</h3>
-            <p style="color: #888; font-size: 0.9em; margin-top: 0;">Includes 15m buffer automatically.</p>
+            <h3 style="color: #fff; margin-top: 0;">💎 Select Duration</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0;">Includes a discreet private transition buffer.</p>
             <div class="duration-grid" id="durationGrid"></div>
             <button class="btn-cancel-modal" onclick="closeModal()">Cancel</button>
         </div>
@@ -90,8 +267,8 @@
     <!-- Move Booking Modal (Admin) -->
     <div class="modal-overlay" id="moveModal">
         <div class="modal-content">
-            <h3>Reschedule Client</h3>
-            <p id="moveClientSubtitle" style="color: #888; font-size: 0.85em; margin-top: 0;"></p>
+            <h3 style="color: #fff; margin-top: 0;">Reschedule Client</h3>
+            <p id="moveClientSubtitle" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0;"></p>
             <div class="duration-grid" id="moveGrid" style="grid-template-columns: 1fr;"></div>
             <button class="btn-cancel-modal" onclick="closeMoveModal()">Cancel</button>
         </div>
@@ -100,8 +277,8 @@
     <!-- Pricing Configuration Modal (Admin) -->
     <div class="modal-overlay" id="priceModal">
         <div class="modal-content">
-            <h3>Configure Rates</h3>
-            <div style="text-align: left; margin-top: 15px;">
+            <h3 style="color: #fff; margin-top: 0;">💎 Configure Rates</h3>
+            <div style="text-align: left; margin-top: 15px; font-size: 0.85rem;">
                 <div class="price-row"><span>15 Mins:</span> <input type="text" id="price-15" class="price-input" placeholder="Optional"></div>
                 <div class="price-row"><span>30 Mins:</span> <input type="text" id="price-30" class="price-input" placeholder="Optional"></div>
                 <div class="price-row"><span>45 Mins:</span> <input type="text" id="price-45" class="price-input" placeholder="Optional"></div>
@@ -109,7 +286,7 @@
                 <div class="price-row"><span>1.5 Hours:</span> <input type="text" id="price-90" class="price-input" placeholder="Optional"></div>
                 <div class="price-row"><span>2 Hours:</span> <input type="text" id="price-120" class="price-input" placeholder="Optional"></div>
             </div>
-            <button class="btn-action" style="margin-top: 15px; width: 100%;" onclick="savePrices()">Save Rates</button>
+            <button class="btn-action" style="margin-top: 15px; width: 100%; background: linear-gradient(135deg, #059669, #0d9488);" onclick="savePrices()">Save Rates</button>
             <button class="btn-cancel-modal" onclick="closePriceModal()">Cancel</button>
         </div>
     </div>
@@ -117,12 +294,12 @@
     <!-- Message Templates Modal (Admin) -->
     <div class="modal-overlay" id="templateModal">
         <div class="modal-content">
-            <h3>Message Templates</h3>
+            <h3 style="color: #fff; margin-top: 0;">Message Templates</h3>
             <div style="text-align: left; margin-top: 15px;">
-                <p style="font-size: 0.8em; color: #aaa; margin-bottom: 5px;">"Ready" Text:</p>
+                <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 5px; font-weight: 600;">"Ready" Text:</p>
                 <textarea id="templateReady">Hi, I'm ready for you. Head over to [Location / Buzz Code]. See you soon!</textarea>
                 
-                <p style="font-size: 0.8em; color: #aaa; margin-top: 15px; margin-bottom: 5px;">"Delay Notification" Text:</p>
+                <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 15px; margin-bottom: 5px; font-weight: 600;">"Delay Notification" Text:</p>
                 <textarea id="templateDelay">Update: Running a bit behind. Can we push your block to {time}? Let me know if that works!</textarea>
             </div>
             <button class="btn-action" style="margin-top: 15px; width: 100%;" onclick="saveTemplates()">Save Templates</button>
@@ -179,7 +356,7 @@
         }
 
         function generateShift() {
-            if(slots.length > 0 && slots.some(s => s.alias) && !confirm("Warning: Erase booked clients and generate new grid?")) return;
+            if(slots.length > 0 && slots.some(s => s.alias) && !confirm("Warning: Erase booked clients and set new schedule?")) return;
             const startHour = parseInt(document.getElementById('startHour').value);
             const duration = parseInt(document.getElementById('durationHours').value);
             slots = [];
@@ -192,13 +369,17 @@
 
         function toggleView() {
             currentView = currentView === 'admin' ? 'client' : 'admin';
-            document.getElementById('viewToggle').innerText = `Currently viewing as: ${currentView.toUpperCase()}`;
+            document.getElementById('viewToggle').innerText = currentView === 'admin' ? '💎 Admin Atelier View' : '💎 Client Portal View';
             document.getElementById('adminControls').style.display = currentView === 'admin' ? 'block' : 'none';
-            document.getElementById('subtext').innerText = currentView === 'admin' ? 'Master Schedule' : 'Select your start time';
+            document.getElementById('subtext').innerText = currentView === 'admin' ? 'Secure Executive Scheduling Atelier' : 'Select your preferred time block';
             render();
         }
 
-        function copyGlobalLink() { alert("Copied: harkerconsulting.com/book?token=eyJhb..."); }
+        function copyGlobalLink() { 
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert("Copied invite link to clipboard!");
+            });
+        }
 
         function copyReadyText() {
             navigator.clipboard.writeText(templates.ready).then(() => alert(`Copied to clipboard:\n\n"${templates.ready}"`));
@@ -373,8 +554,9 @@
 
                 if (prices[mins]) {
                     const priceSpan = document.createElement('span');
-                    priceSpan.style.color = '#88cc44';
-                    priceSpan.style.fontSize = '0.8em';
+                    priceSpan.style.color = '#34d399';
+                    priceSpan.style.fontSize = '0.78rem';
+                    priceSpan.style.fontWeight = '600';
                     priceSpan.innerText = prices[mins];
                     btn.appendChild(priceSpan);
                 }
@@ -429,7 +611,7 @@
             grid.innerHTML = ''; 
 
             if(slots.length === 0) {
-                grid.innerHTML = '<p style="text-align:center; color:#555;">No shift generated. Use Admin tools to set availability.</p>';
+                grid.innerHTML = '<p style="text-align:center; color:var(--text-dim); padding: 20px;">No schedule initialized. Set your day above.</p>';
                 return;
             }
 
@@ -440,13 +622,13 @@
                 
                 if (slot.isBuffer && currentView === 'admin') {
                     div.className = 'slot buffer';
-                    div.innerText = '🧹 15m Prep & Clean (Buffer)';
+                    div.innerText = '🧹 15m Private Transition Buffer';
                     grid.appendChild(div); return; 
                 }
 
                 if (slot.alias && !slot.isMainSlot && currentView === 'admin') {
                     div.className = 'slot booked-sub';
-                    div.innerText = '↳ Continuing...';
+                    div.innerText = '↳ Continuing block...';
                     grid.appendChild(div); return; 
                 }
 
@@ -455,11 +637,13 @@
                 headerDiv.className = 'slot-header';
 
                 const timeText = document.createElement('span');
+                timeText.style.fontWeight = '600';
                 timeText.innerText = formatTime(slot.time);
                 
-                const hasNote = clientNotesDB[slot.alias] ? '<span class="has-note">📝 Has Notes</span>' : '';
+                const hasNote = clientNotesDB[slot.alias] ? '<span class="has-note">📝 Notes</span>' : '';
                 const statusText = document.createElement('span');
-                statusText.innerHTML = slot.alias ? `Booked: ${slot.alias} ${currentView === 'admin' ? hasNote : ''}` : 'Available';
+                statusText.style.fontWeight = '500';
+                statusText.innerHTML = slot.alias ? `Booked: ${slot.alias} ${currentView === 'admin' ? hasNote : ''}` : '💎 Available';
 
                 headerDiv.appendChild(timeText);
                 headerDiv.appendChild(statusText);
@@ -471,7 +655,7 @@
                     
                     const delayBtn = document.createElement('button');
                     delayBtn.className = 'btn-delay';
-                    delayBtn.innerText = '⏳ +15m Delay';
+                    delayBtn.innerText = '⏳ +15m';
                     delayBtn.onclick = (e) => { e.stopPropagation(); delayClient(slot.alias); };
 
                     const readyBtn = document.createElement('button');
@@ -509,7 +693,7 @@
         }
 
         function wipeShift() {
-            if (confirm("WARNING: Erase all data?")) {
+            if (confirm("WARNING: End shift and erase all data?")) {
                 slots = slots.map(slot => ({ ...slot, alias: null, isMainSlot: false, isBuffer: false }));
                 render();
             }
