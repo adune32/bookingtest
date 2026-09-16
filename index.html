@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chloe's Playhaus — Atelier</title>
+    <title>Chloe's Playhaus — Master Atelier</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
@@ -25,16 +25,15 @@
         body { 
             font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; 
             background-color: var(--bg-deep);
-            /* Organic, unevenly spaced glitter stardust dusting */
             background-image: 
                 radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #f472b6, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #ec4899, rgba(0,0,0,0)),
                 radial-gradient(1px 1.5px at 150px 120px, #e9d5ff, rgba(0,0,0,0)),
                 radial-gradient(2px 2px at 220px 80px, #ffffff, rgba(0,0,0,0)),
-                radial-gradient(1.5px 1.5px at 300px 200px, #f472b6, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 300px 200px, #ec4899, rgba(0,0,0,0)),
                 radial-gradient(2px 1px at 70px 280px, #ffffff, rgba(0,0,0,0)),
                 radial-gradient(1px 2px at 350px 320px, #e9d5ff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 180px 400px, #f472b6, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 180px 400px, #ec4899, rgba(0,0,0,0)),
                 radial-gradient(1.5px 1.5px at 410px 150px, #ffffff, rgba(0,0,0,0)),
                 radial-gradient(circle at 15% 10%, rgba(236, 72, 153, 0.35) 0%, transparent 45%),
                 radial-gradient(circle at 85% 90%, rgba(249, 115, 22, 0.3) 0%, transparent 45%),
@@ -48,7 +47,6 @@
             min-height: 100vh;
         }
 
-        /* Frosted Glass Header with Shimmer */
         .header { 
             text-align: center; 
             padding: 28px 20px; 
@@ -71,13 +69,13 @@
             right: 15px;
             font-size: 0.75rem;
             letter-spacing: 4px;
-            opacity: 0.7;
+            opacity: 0.9;
             animation: pulseGlow 3s infinite alternate;
         }
 
         @keyframes pulseGlow {
             0% { opacity: 0.4; filter: drop-shadow(0 0 2px rgba(236,72,153,0.5)); }
-            100% { opacity: 0.9; filter: drop-shadow(0 0 8px rgba(236,72,153,0.9)); }
+            100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(236,72,153,1)); }
         }
 
         .header h2 {
@@ -99,7 +97,6 @@
             font-weight: 300;
         }
 
-        /* Glassmorphism Containers */
         .admin-panel, .setup-panel { 
             background: var(--glass-bg); 
             backdrop-filter: blur(24px);
@@ -112,7 +109,6 @@
             box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5); 
         }
 
-        /* Slots Design matching the card styling */
         .slot { 
             background: var(--glass-bg); 
             backdrop-filter: blur(16px);
@@ -139,6 +135,17 @@
             border-color: rgba(236, 72, 153, 0.25); 
             cursor: default; 
         }
+        .slot.blocked { 
+            background: rgba(15, 15, 20, 0.5);
+            border-left: 4px solid #4b5563; 
+            color: #6b7280;
+            border-color: rgba(255,255,255,0.03);
+            box-shadow: none;
+        }
+        .slot.blocked:hover {
+            background: rgba(25, 20, 30, 0.6);
+            border-color: rgba(255,255,255,0.1);
+        }
         .slot.booked-sub { 
             background: rgba(30, 5, 20, 0.5); 
             padding: 8px 16px; 
@@ -163,7 +170,6 @@
         .slot-header { display: flex; justify-content: space-between; align-items: center; }
         .slot-actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
         
-        /* Vibrant Neon Gradient Buttons with Glitter Glow */
         button { 
             background: linear-gradient(135deg, #9333ea 0%, #ec4899 100%); 
             color: var(--text-main); 
@@ -191,8 +197,7 @@
         .btn-setup { background: linear-gradient(135deg, #7c3aed, #4c1d95); margin-bottom: 0; }
         button:active { transform: scale(0.98); }
         
-        /* Inputs & Fields */
-        input, textarea { 
+        input, textarea, select { 
             background: rgba(10, 5, 18, 0.7); 
             color: var(--text-main); 
             border: 1px solid rgba(255, 255, 255, 0.12); 
@@ -202,13 +207,18 @@
             outline: none;
             transition: border-color 0.2s;
         }
-        input:focus, textarea:focus { border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
-        input { width: 60px; margin-right: 10px; text-align: center; font-weight: 600; }
+        input:focus, textarea:focus, select:focus { border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(236, 72, 153, 0.4); }
+        input[type="time"], select { font-weight: 600; text-align: center; color: var(--text-main); }
+        input[type="date"] { width: 100%; box-sizing: border-box; font-weight: 600; font-size: 1rem; text-align: center; color: #f472b6; cursor: pointer; margin-bottom: 10px; padding: 12px; border-color: rgba(236,72,153,0.4); background: rgba(236,72,153,0.05); }
+        
+        .control-row { display: flex; gap: 8px; margin-bottom: 12px; align-items: center; justify-content: space-between; }
+        .control-row input[type="time"], .control-row select { flex: 1; width: 100%; }
+        .control-row input[type="date"] { flex: 1; width: 100%; margin-bottom: 0; padding: 10px; }
+        
         .price-input { width: 110px; margin: 0; text-align: left; }
         .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: rgba(30, 10, 45, 0.4); padding: 10px 14px; border-radius: 12px; border: 1px solid var(--glass-border); }
         textarea { width: 100%; box-sizing: border-box; height: 80px; resize: none; font-size: 0.9em; }
 
-        /* Floating Glass Modals */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 2, 10, 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); align-items: center; justify-content: center; z-index: 100; }
         .modal-content { background: rgba(26, 12, 42, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 25px; border-radius: 24px; width: 90%; max-width: 360px; border: 1px solid rgba(255, 255, 255, 0.2); text-align: center; max-height: 90vh; overflow-y: auto; box-shadow: 0 25px 60px rgba(0,0,0,0.8), 0 0 40px rgba(147, 51, 234, 0.3); }
         .duration-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
@@ -218,53 +228,137 @@
         
         .has-note { color: #34d399; font-size: 0.75rem; margin-left: 8px; font-weight: 600; background: rgba(5, 150, 105, 0.25); padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(52, 211, 153, 0.4); }
         #viewToggle { background: linear-gradient(135deg, #9333ea, #ec4899); border: 1px solid rgba(255,255,255,0.35); margin-bottom: 20px; font-weight: 600; letter-spacing: 0.5px; box-shadow: 0 4px 20px rgba(236, 72, 153, 0.45); }
+        .pink-gem { color: #ec4899; text-shadow: 0 0 8px rgba(236,72,153,0.6); }
+        .section-title { margin-top: 0; color: #f472b6; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600; margin-bottom: 12px; }
+        
+        .gift-tally-box {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(147, 51, 234, 0.15) 100%);
+            border: 1px solid rgba(236, 72, 153, 0.3);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .gift-tally-amount {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 5px 0 0 0;
+            text-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
+            letter-spacing: 1px;
+        }
     </style>
 </head>
 <body>
 
-    <button onclick="toggleView()" id="viewToggle">💎 Admin Atelier View</button>
+    <button onclick="toggleView()" id="viewToggle"><span class="pink-gem">💎</span> Admin Atelier View</button>
 
     <div class="header">
-        <h2>✨ CHLOE'S PLAYHAUS ✨</h2>
+        <h2><span class="pink-gem">💎</span> CHLOE'S PLAYHAUS <span class="pink-gem">💎</span></h2>
         <p id="subtext">Secure Executive Scheduling Atelier</p>
     </div>
 
     <!-- Admin Controls -->
     <div id="adminControls">
-        <div class="setup-panel">
-            <p style="margin-top: 0; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">1. Schedule & Pricing Setup</p>
-            <div style="display: flex; align-items: center; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-dim);">
-                Start (24h): <input type="number" id="startHour" value="20" min="0" max="23">
-                Hours: <input type="number" id="durationHours" value="4" min="1" max="12">
+        
+        <!-- 1. Master Calendar Date Selector -->
+        <div class="setup-panel" style="border-color: rgba(236,72,153,0.4);">
+            <p class="section-title"><span class="pink-gem">💎</span> 1. Select Master Date</p>
+            <input type="date" id="calendarDateSelect" onchange="switchActiveDate(this.value)">
+            <div style="display: flex; gap: 10px; margin-top: 5px;">
+                <button class="btn-setup" style="background: linear-gradient(135deg, #059669, #0d9488); flex: 1;" onclick="openPriceModal()">💰 Set Rates</button>
+                <button class="btn-setup" style="background: linear-gradient(135deg, #7c3aed, #db2777); flex: 1;" onclick="openTemplateModal()">📝 Templates</button>
             </div>
-            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                <button class="btn-setup" onclick="generateShift()">📅 Set Schedule</button>
-                <button class="btn-setup" style="background: linear-gradient(135deg, #059669, #0d9488);" onclick="openPriceModal()">💎 Set Rates</button>
-            </div>
-            <button class="btn-setup" style="background: linear-gradient(135deg, #7c3aed, #db2777); width: 100%;" onclick="openTemplateModal()">📝 Message Templates</button>
+            <button class="btn-action" style="margin-top: 10px; width: 100%; background: linear-gradient(135deg, #9333ea, #ec4899);" onclick="generateTokenLink()">💌 Generate Token Link for this Date</button>
         </div>
 
+        <!-- 2. Daily Override Sculptor -->
+        <div class="setup-panel">
+            <p class="section-title">📅 2. Sculpt Selected Day</p>
+            <p id="sculptDateLabel" style="font-size: 0.85rem; color: var(--text-muted); margin-top: -5px; margin-bottom: 10px; text-align: center;">Currently Sculpting: Today</p>
+            <div class="control-row">
+                <input type="time" id="modStart" value="12:00">
+                <span style="color:var(--text-dim); font-size:0.8rem;">to</span>
+                <input type="time" id="modEnd" value="23:45">
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-setup" style="background: linear-gradient(135deg, #059669, #0d9488); flex: 1;" onclick="modifyDayRange('open')">☀️ Open Shifts</button>
+                <button class="btn-setup" style="background: linear-gradient(135deg, #374151, #1f2937); border-color:#6b7280; flex: 1;" onclick="modifyDayRange('close')">🌑 Close Shifts</button>
+            </div>
+        </div>
+
+        <!-- 3. Direct Sniper Scheduler -->
+        <div class="setup-panel" style="border-color: rgba(236,72,153,0.5);">
+            <p class="section-title"><span class="pink-gem">💎</span> 3. Direct Schedule (Auto-Unblock)</p>
+            <div class="control-row">
+                <input type="date" id="dirDate" style="flex:1;">
+                <input type="time" id="dirTime" value="20:00" style="flex:1;">
+            </div>
+            <div class="control-row">
+                <select id="dirDuration" style="flex:1;">
+                    <option value="15">15 Mins</option>
+                    <option value="30">30 Mins</option>
+                    <option value="45">45 Mins</option>
+                    <option value="60" selected>1 Hour</option>
+                    <option value="90">1.5 Hours</option>
+                    <option value="120">2 Hours</option>
+                </select>
+                <input type="text" id="dirAlias" placeholder="Client Alias" style="flex:1; margin:0;">
+            </div>
+            <button class="btn-setup" style="background: linear-gradient(135deg, #ec4899, #9333ea); border-color: rgba(255,255,255,0.4);" onclick="directAdminBook()">👤 Book & Auto-Unblock</button>
+        </div>
+
+        <!-- 4. Projected Gifts -->
+        <div class="gift-tally-box">
+            <p style="margin: 0; color: #f472b6; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 600;">🎁 Projected Gifts for Date</p>
+            <h3 id="giftTotalDisplay" class="gift-tally-amount">0</h3>
+            <p style="margin: 5px 0 0 0; color: var(--text-muted); font-size: 0.75rem;">Calculated automatically from scheduled blocks & active rates.</p>
+        </div>
+
+        <!-- 5. Live Operations -->
         <div class="admin-panel">
-            <p style="margin-top: 0; color: #f472b6; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 600;">2. Live Operations</p>
-            <button class="btn-action" style="margin-bottom: 10px; width: 100%; background: linear-gradient(135deg, #9333ea, #7c3aed);" onclick="copyGlobalLink()">💌 Copy Invite Link</button>
-            <button onclick="wipeShift()" style="margin-bottom: 0; background: linear-gradient(135deg, #e11d48, #be123c); border-color: rgba(244,63,94,0.4);">🗑️ End Shift</button>
+            <p class="section-title">5. Atelier Operations</p>
+            <button id="toggleBlockedBtn" class="btn-setup" style="margin-bottom: 10px; width: 100%; background: linear-gradient(135deg, #374151, #1f2937); border-color:#6b7280;" onclick="toggleBlockedVisibility()">👁️ Show Shaded Times</button>
+            <button onclick="clearDayBookings()" style="margin-bottom: 0; background: linear-gradient(135deg, #e11d48, #be123c); border-color: rgba(244,63,94,0.4);">🗑️ Clear Bookings For This Day</button>
+        </div>
+
+    </div>
+
+    <!-- The 24/7 Booking Grid -->
+    <div id="grid"></div>
+
+    <!-- Admin: Slot Action Modal -->
+    <div class="modal-overlay" id="slotActionModal">
+        <div class="modal-content">
+            <h3 style="color: #fff; margin-top: 0;"><span class="pink-gem">💎</span> Manage Slot</h3>
+            <p id="slotActionSubtitle" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0;"></p>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                <button class="btn-setup" style="background: linear-gradient(135deg, #9333ea, #ec4899);" onclick="promptBookSlot()">👤 Book Client</button>
+                <button class="btn-setup" style="background: linear-gradient(135deg, #059669, #0d9488);" onclick="toggleBlockSlot(false)">☀️ Open / Unshadow Time</button>
+                <button class="btn-setup" style="background: linear-gradient(135deg, #374151, #1f2937); border-color:#6b7280;" onclick="toggleBlockSlot(true)">🌑 Shadow Out / Block Time</button>
+            </div>
+            <button class="btn-cancel-modal" onclick="document.getElementById('slotActionModal').style.display='none'">Cancel</button>
         </div>
     </div>
 
-    <!-- The Booking Grid -->
-    <div id="grid"></div>
-
-    <!-- Duration Picker Modal (Client) -->
+    <!-- Shared: Duration Picker Modal -->
     <div class="modal-overlay" id="durationModal">
         <div class="modal-content">
-            <h3 style="color: #fff; margin-top: 0;">💎 Select Duration</h3>
+            <h3 style="color: #fff; margin-top: 0;"><span class="pink-gem">💎</span> Select Duration</h3>
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0;">Includes a discreet private transition buffer.</p>
             <div class="duration-grid" id="durationGrid"></div>
             <button class="btn-cancel-modal" onclick="closeModal()">Cancel</button>
         </div>
     </div>
 
-    <!-- Move Booking Modal (Admin) -->
+    <!-- Client: Database Sync Simulation Modal -->
+    <div class="modal-overlay" id="clientRequestModal">
+        <div class="modal-content" id="clientRequestContent">
+            <!-- Injected via JS -->
+        </div>
+    </div>
+
+    <!-- Admin: Move Booking Modal -->
     <div class="modal-overlay" id="moveModal">
         <div class="modal-content">
             <h3 style="color: #fff; margin-top: 0;">Reschedule Client</h3>
@@ -274,10 +368,10 @@
         </div>
     </div>
 
-    <!-- Pricing Configuration Modal (Admin) -->
+    <!-- Admin: Pricing Configuration Modal -->
     <div class="modal-overlay" id="priceModal">
         <div class="modal-content">
-            <h3 style="color: #fff; margin-top: 0;">💎 Configure Rates</h3>
+            <h3 style="color: #fff; margin-top: 0;"><span class="pink-gem">💎</span> Configure Rates</h3>
             <div style="text-align: left; margin-top: 15px; font-size: 0.85rem;">
                 <div class="price-row"><span>15 Mins:</span> <input type="text" id="price-15" class="price-input" placeholder="Optional"></div>
                 <div class="price-row"><span>30 Mins:</span> <input type="text" id="price-30" class="price-input" placeholder="Optional"></div>
@@ -291,7 +385,7 @@
         </div>
     </div>
 
-    <!-- Message Templates Modal (Admin) -->
+    <!-- Admin: Message Templates Modal -->
     <div class="modal-overlay" id="templateModal">
         <div class="modal-content">
             <h3 style="color: #fff; margin-top: 0;">Message Templates</h3>
@@ -308,20 +402,26 @@
     </div>
 
     <script>
+        const BUSINESS_DAY_START_HOUR = 8; 
+        const dayStartOffset = BUSINESS_DAY_START_HOUR * 60;
+
         let currentView = 'admin'; 
-        let slots = []; 
+        let activeDate = new Date().toISOString().split('T')[0];
+        let masterScheduleDB = {}; 
         let clientNotesDB = {}; 
         const baseIncrement = 15; 
         let pendingStartIndex = null; 
         let activeMovingAlias = null; 
+        let showBlockedAdmin = false; 
 
         let prices = { 15: "", 30: "", 45: "", 60: "", 90: "", 120: "" };
         const durationLabels = { 15: "15 Mins", 30: "30 Mins", 45: "45 Mins", 60: "1 Hour", 90: "1.5 Hours", 120: "2 Hours" };
-
         let templates = {
             ready: "Hi, I'm ready for you. Head over to [Location / Buzz Code]. See you soon!",
             delay: "Update: Running a bit behind. Can we push your block to {time}? Let me know if that works!"
         };
+
+        document.getElementById('calendarDateSelect').value = activeDate;
 
         function formatTime(totalMinutes) {
             let h = Math.floor(totalMinutes / 60) % 24;
@@ -331,11 +431,172 @@
             return `${h}:${m.toString().padStart(2, '0')} ${ampm}`;
         }
 
+        function timeStrToMinutes(timeStr) {
+            let [h, m] = timeStr.split(':').map(Number);
+            return h * 60 + Math.floor(m / 15) * 15;
+        }
+
+        function isTimeInRange(time, start, end) {
+            if (start <= end) return time >= start && time <= end;
+            return time >= start || time <= end;
+        }
+
+        // Initialize 96 fully BLOCKED slots for any new date
+        function getOrCreateDaySlots(dateStr) {
+            if (masterScheduleDB[dateStr]) return masterScheduleDB[dateStr];
+            let daySlots = [];
+            for (let i = 0; i < 96; i++) {
+                let slotTime = (i * baseIncrement + dayStartOffset) % 1440;
+                daySlots.push({ 
+                    time: slotTime, 
+                    alias: null, 
+                    isBlocked: true, // Deny-by-default logic
+                    isMainSlot: false, 
+                    isBuffer: false 
+                });
+            }
+            masterScheduleDB[dateStr] = daySlots;
+            return daySlots;
+        }
+
+        function switchActiveDate(newDate) {
+            if (!newDate) return;
+            activeDate = newDate;
+            document.getElementById('sculptDateLabel').innerText = `Currently Sculpting: ${activeDate}`;
+            document.getElementById('dirDate').value = activeDate;
+            getOrCreateDaySlots(activeDate);
+            render();
+        }
+
+        switchActiveDate(activeDate);
+
+        function updateGiftTotal() {
+            let slots = masterScheduleDB[activeDate] || [];
+            let total = 0;
+            let currentAlias = null;
+            let currentDuration = 0;
+
+            slots.forEach(slot => {
+                if (slot.alias && slot.alias !== 'BUFFER') {
+                    if (slot.alias === currentAlias && !slot.isMainSlot) {
+                        currentDuration += baseIncrement;
+                    } else {
+                        if (currentAlias && currentDuration > 0) {
+                            if (prices[currentDuration]) {
+                                let val = parseFloat(prices[currentDuration].replace(/[^0-9.]/g, ''));
+                                if (!isNaN(val)) total += val;
+                            }
+                        }
+                        currentAlias = slot.alias;
+                        currentDuration = baseIncrement;
+                    }
+                } else {
+                    if (currentAlias && currentDuration > 0) {
+                        if (prices[currentDuration]) {
+                            let val = parseFloat(prices[currentDuration].replace(/[^0-9.]/g, ''));
+                            if (!isNaN(val)) total += val;
+                        }
+                    }
+                    currentAlias = null;
+                    currentDuration = 0;
+                }
+            });
+            
+            if (currentAlias && currentDuration > 0) {
+                if (prices[currentDuration]) {
+                    let val = parseFloat(prices[currentDuration].replace(/[^0-9.]/g, ''));
+                    if (!isNaN(val)) total += val;
+                }
+            }
+
+            let displayTotal = total % 1 === 0 ? total.toLocaleString() : total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('giftTotalDisplay').innerText = total > 0 ? displayTotal : "0";
+        }
+
+        function modifyDayRange(action) {
+            const startMins = timeStrToMinutes(document.getElementById('modStart').value);
+            const endMins = timeStrToMinutes(document.getElementById('modEnd').value);
+            let slots = masterScheduleDB[activeDate];
+            let startIndex = slots.findIndex(s => s.time === startMins);
+            let endIndex = slots.findIndex(s => s.time === endMins);
+
+            if (startIndex === -1 || endIndex === -1) return alert("Invalid time selection.");
+
+            let changesMade = 0;
+            if (startIndex <= endIndex) {
+                for(let i = startIndex; i <= endIndex; i++) {
+                    if (!slots[i].alias && !slots[i].isBuffer) { slots[i].isBlocked = (action === 'close'); changesMade++; }
+                }
+            } else {
+                for(let i = startIndex; i < slots.length; i++) {
+                    if (!slots[i].alias && !slots[i].isBuffer) { slots[i].isBlocked = (action === 'close'); changesMade++; }
+                }
+                for(let i = 0; i <= endIndex; i++) {
+                    if (!slots[i].alias && !slots[i].isBuffer) { slots[i].isBlocked = (action === 'close'); changesMade++; }
+                }
+            }
+            
+            showBlockedAdmin = true;
+            document.getElementById('toggleBlockedBtn').innerText = "🙈 Hide Shaded Times";
+            render();
+            alert(`Successfully ${action === 'open' ? 'opened' : 'closed'} ${changesMade} slots for ${activeDate}.`);
+        }
+
+        function directAdminBook() {
+            const targetDate = document.getElementById('dirDate').value;
+            const startMins = timeStrToMinutes(document.getElementById('dirTime').value);
+            const durationMins = parseInt(document.getElementById('dirDuration').value);
+            const alias = document.getElementById('dirAlias').value.trim();
+
+            if(!alias) return alert("Please enter a client alias.");
+
+            let slots = getOrCreateDaySlots(targetDate);
+            let startIndex = slots.findIndex(s => s.time === startMins);
+            if (startIndex === -1) return alert("Invalid start time.");
+
+            let blocksNeeded = durationMins / 15;
+            let requiresBuffer = (startIndex + blocksNeeded < slots.length);
+            let totalNeeded = requiresBuffer ? blocksNeeded + 1 : blocksNeeded;
+
+            if (startIndex + totalNeeded > slots.length) return alert("Not enough time left in the day for this duration.");
+
+            for(let i=0; i<totalNeeded; i++) {
+                if(slots[startIndex+i].alias !== null) return alert(`Conflict! Slot at ${formatTime(slots[startIndex+i].time)} is already booked.`);
+            }
+
+            for(let i=0; i<blocksNeeded; i++) {
+                slots[startIndex+i].isBlocked = false; 
+                slots[startIndex+i].alias = alias;
+                slots[startIndex+i].isMainSlot = (i===0);
+                slots[startIndex+i].isBuffer = false;
+            }
+            if(requiresBuffer) {
+                slots[startIndex+blocksNeeded].isBlocked = false; 
+                slots[startIndex+blocksNeeded].alias = 'BUFFER';
+                slots[startIndex+blocksNeeded].isMainSlot = false;
+                slots[startIndex+blocksNeeded].isBuffer = true;
+            }
+
+            if (targetDate !== activeDate) {
+                document.getElementById('calendarDateSelect').value = targetDate;
+                switchActiveDate(targetDate);
+            } else {
+                render();
+            }
+            alert(`Sniper Success! Unblocked time and booked [${alias}] on ${targetDate} at ${formatTime(startMins)}.`);
+        }
+
+        function toggleBlockedVisibility() {
+            showBlockedAdmin = !showBlockedAdmin;
+            document.getElementById('toggleBlockedBtn').innerText = showBlockedAdmin ? "🙈 Hide Shaded Times" : "👁️ Show Shaded Times";
+            render();
+        }
+
         function openPriceModal() {
             Object.keys(prices).forEach(key => document.getElementById(`price-${key}`).value = prices[key]);
             document.getElementById('priceModal').style.display = 'flex';
         }
-        function closePriceModal() { document.getElementById('priceModal').style.display = 'none'; }
+        function closePriceModal() { document.getElementById('priceModal').style.display = 'none'; updateGiftTotal(); }
         function savePrices() {
             Object.keys(prices).forEach(key => prices[key] = document.getElementById(`price-${key}`).value.trim());
             closePriceModal();
@@ -355,35 +616,22 @@
             alert("Templates updated.");
         }
 
-        function generateShift() {
-            if(slots.length > 0 && slots.some(s => s.alias) && !confirm("Warning: Erase booked clients and set new schedule?")) return;
-            const startHour = parseInt(document.getElementById('startHour').value);
-            const duration = parseInt(document.getElementById('durationHours').value);
-            slots = [];
-            const totalBlocks = (duration * 60) / baseIncrement;
-            for(let i = 0; i < totalBlocks; i++) {
-                slots.push({ time: (startHour * 60) + (i * baseIncrement), alias: null, isMainSlot: false, isBuffer: false });
-            }
-            render();
-        }
-
         function toggleView() {
             currentView = currentView === 'admin' ? 'client' : 'admin';
-            document.getElementById('viewToggle').innerText = currentView === 'admin' ? '💎 Admin Atelier View' : '💎 Client Portal View';
+            document.getElementById('viewToggle').innerHTML = currentView === 'admin' ? '<span class="pink-gem">💎</span> Admin Atelier View' : '<span class="pink-gem">💎</span> Client Portal View';
             document.getElementById('adminControls').style.display = currentView === 'admin' ? 'block' : 'none';
-            document.getElementById('subtext').innerText = currentView === 'admin' ? 'Secure Executive Scheduling Atelier' : 'Select your preferred time block';
+            document.getElementById('subtext').innerText = currentView === 'admin' ? 'Secure Executive Scheduling Atelier' : `Booking for: ${activeDate}`;
             render();
         }
 
-        function copyGlobalLink() { 
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                alert("Copied invite link to clipboard!");
-            });
+        // Simulates the generation of a tokenized URL for the central database
+        function generateTokenLink() { 
+            const mockToken = Math.random().toString(36).substr(2, 10);
+            const link = `https://chloesplayhaus.com/book?date=${activeDate}&token=${mockToken}`;
+            navigator.clipboard.writeText(link).then(() => alert(`Generated and copied secure token link for ${activeDate}:\n\n${link}`)); 
         }
 
-        function copyReadyText() {
-            navigator.clipboard.writeText(templates.ready).then(() => alert(`Copied to clipboard:\n\n"${templates.ready}"`));
-        }
+        function copyReadyText() { navigator.clipboard.writeText(templates.ready).then(() => alert(`Copied to clipboard:\n\n"${templates.ready}"`)); }
 
         function manageNotes(alias) {
             const existingNote = clientNotesDB[alias] || "";
@@ -395,149 +643,26 @@
             }
         }
 
-        function delayClient(targetAlias) {
-            let mainIndex = slots.findIndex(s => s.alias === targetAlias && s.isMainSlot);
-            if (mainIndex === -1) return;
-
-            let blockCount = 0;
-            let hasBuffer = false;
-            for (let i = mainIndex; i < slots.length; i++) {
-                if (slots[i].alias === targetAlias || slots[i].isBuffer) {
-                    blockCount++;
-                    if (slots[i].isBuffer) hasBuffer = true;
-                } else {
-                    break;
-                }
-            }
-
-            if (mainIndex + blockCount >= slots.length) {
-                alert("Cannot delay: Client is at the very end of the shift boundary.");
-                return;
-            }
-
-            let oldTimes = [];
-            for (let i = 0; i < blockCount; i++) {
-                oldTimes.push({ alias: slots[mainIndex + i].alias, isMain: slots[mainIndex + i].isMainSlot, isBuf: slots[mainIndex + i].isBuffer });
-                slots[mainIndex + i].alias = null;
-                slots[mainIndex + i].isMainSlot = false;
-                slots[mainIndex + i].isBuffer = false;
-            }
-
-            for (let i = 0; i < blockCount; i++) {
-                slots[mainIndex + 1 + i].alias = oldTimes[i].alias;
-                slots[mainIndex + 1 + i].isMainSlot = oldTimes[i].isMain;
-                slots[mainIndex + 1 + i].isBuffer = oldTimes[i].isBuf;
-            }
-
-            let newTimeStr = formatTime(slots[mainIndex + 1].time);
-            let text = templates.delay.replace('{time}', newTimeStr);
-            
-            navigator.clipboard.writeText(text).then(() => {
-                alert(`Client pushed +15 mins.\nCopied text to clipboard:\n\n"${text}"`);
-                render();
-            });
+        function handleSlotClick(index) {
+            pendingStartIndex = index;
+            let slots = masterScheduleDB[activeDate];
+            const slot = slots[index];
+            document.getElementById('slotActionSubtitle').innerText = `Time: ${formatTime(slot.time)} on ${activeDate}`;
+            document.getElementById('slotActionModal').style.display = 'flex';
         }
 
-        function openMoveModal(targetAlias) {
-            activeMovingAlias = targetAlias;
-            document.getElementById('moveClientSubtitle').innerText = `Rescheduling booking for [${targetAlias}]`;
-            
-            const moveGrid = document.getElementById('moveGrid');
-            moveGrid.innerHTML = '';
-
-            slots.forEach((slot, index) => {
-                if (!slot.alias) {
-                    const btn = document.createElement('button');
-                    btn.className = 'btn-duration';
-                    btn.style.width = '100%';
-                    btn.innerText = `Move to ${formatTime(slot.time)}`;
-                    btn.onclick = () => executeMove(index);
-                    moveGrid.appendChild(btn);
-                }
-            });
-
-            document.getElementById('moveModal').style.display = 'flex';
-        }
-
-        function closeMoveModal() {
-            document.getElementById('moveModal').style.display = 'none';
-            activeMovingAlias = null;
-        }
-
-        function executeMove(newStartIndex) {
-            let targetAlias = activeMovingAlias;
-            let mainIndex = slots.findIndex(s => s.alias === targetAlias && s.isMainSlot);
-            if (mainIndex === -1) { closeMoveModal(); return; }
-
-            let clientBlocks = [];
-            let hasBuffer = false;
-            for (let i = mainIndex; i < slots.length; i++) {
-                if (slots[i].alias === targetAlias) {
-                    clientBlocks.push({ isMain: slots[i].isMainSlot });
-                } else if (slots[i].isBuffer) {
-                    hasBuffer = true;
-                    break;
-                } else {
-                    break;
-                }
-            }
-
-            let totalNeeded = hasBuffer ? clientBlocks.length + 1 : clientBlocks.length;
-
-            if (newStartIndex + totalNeeded > slots.length) {
-                alert("Not enough room left in shift for this duration at that time.");
-                return;
-            }
-            for (let i = 0; i < totalNeeded; i++) {
-                let checkIdx = newStartIndex + i;
-                if (slots[checkIdx].alias !== null && slots[checkIdx].alias !== targetAlias && !slots[checkIdx].isBuffer) {
-                    alert("Selected time slot overlaps with another booking.");
-                    return;
-                }
-            }
-
-            for (let i = 0; i < slots.length; i++) {
-                if (slots[i].alias === targetAlias || (slots[i].isBuffer && i > mainIndex && i <= mainIndex + clientBlocks.length + 1)) {
-                    slots[i].alias = null;
-                    slots[i].isMainSlot = false;
-                    slots[i].isBuffer = false;
-                }
-            }
-
-            for (let i = 0; i < clientBlocks.length; i++) {
-                slots[newStartIndex + i].alias = targetAlias;
-                slots[newStartIndex + i].isMainSlot = clientBlocks[i].isMain;
-                slots[newStartIndex + i].isBuffer = false;
-            }
-            if (hasBuffer && newStartIndex + clientBlocks.length < slots.length) {
-                slots[newStartIndex + clientBlocks.length].alias = 'BUFFER';
-                slots[newStartIndex + clientBlocks.length].isMainSlot = false;
-                slots[newStartIndex + clientBlocks.length].isBuffer = true;
-            }
-
-            closeMoveModal();
-            render();
-            alert(`Successfully rescheduled [${targetAlias}] to ${formatTime(slots[newStartIndex].time)}`);
-        }
-
-        function cancelBooking(targetAlias) {
-            if(confirm(`Are you sure you want to delete the booking for [${targetAlias}]?`)) {
-                let clearing = false;
-                for (let i = 0; i < slots.length; i++) {
-                    if (slots[i].alias === targetAlias) {
-                        slots[i].alias = null;
-                        slots[i].isMainSlot = false;
-                        clearing = true;
-                    } else if (clearing && slots[i].isBuffer) {
-                        slots[i].alias = null;
-                        slots[i].isBuffer = false;
-                        break;
-                    } else if (clearing) {
-                        break;
-                    }
-                }
+        function toggleBlockSlot(forceBlockStatus) {
+            document.getElementById('slotActionModal').style.display = 'none';
+            if (pendingStartIndex !== null) {
+                let slots = masterScheduleDB[activeDate];
+                slots[pendingStartIndex].isBlocked = forceBlockStatus;
                 render();
             }
+        }
+
+        function promptBookSlot() {
+            document.getElementById('slotActionModal').style.display = 'none';
+            if (pendingStartIndex !== null) openDurationModal(pendingStartIndex);
         }
 
         function openDurationModal(startIndex) {
@@ -560,47 +685,222 @@
                     priceSpan.innerText = prices[mins];
                     btn.appendChild(priceSpan);
                 }
-                btn.onclick = () => processBooking(mins);
+                btn.onclick = () => {
+                    if (currentView === 'admin') processAdminBooking(mins);
+                    else processClientRequest(mins);
+                };
                 grid.appendChild(btn);
             });
             document.getElementById('durationModal').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('durationModal').style.display = 'none';
-            pendingStartIndex = null;
-        }
+        function closeModal() { document.getElementById('durationModal').style.display = 'none'; pendingStartIndex = null; }
 
-        function processBooking(requestedMins) {
+        // ADMIN: Books the slot locally
+        function processAdminBooking(requestedMins) {
             const startIndex = pendingStartIndex;
+            let slots = masterScheduleDB[activeDate];
             const blocksNeeded = requestedMins / baseIncrement;
             let requiresBuffer = (startIndex + blocksNeeded < slots.length);
             let totalBlocksNeeded = requiresBuffer ? blocksNeeded + 1 : blocksNeeded;
 
-            if (startIndex + totalBlocksNeeded > slots.length) {
-                alert("Not enough time left in shift for that duration plus buffer.");
-                closeModal(); return;
-            }
+            if (startIndex + totalBlocksNeeded > slots.length) return alert("Not enough time left in day for that duration plus buffer."), closeModal();
 
             for(let i = 0; i < totalBlocksNeeded; i++) {
-                if (slots[startIndex + i].alias !== null) {
-                    alert("This duration overlaps with an existing booking.");
-                    closeModal(); return;
-                }
+                if (slots[startIndex + i].alias !== null || slots[startIndex + i].isBlocked) return alert("This duration overlaps with an existing booking or shaded block."), closeModal();
             }
 
             closeModal();
-            const alias = prompt(`Space verified. Enter alias to claim ${requestedMins} minutes at ${formatTime(slots[startIndex].time)}:`);
+            const alias = prompt(`Space verified for ${activeDate}. Enter client alias to claim ${requestedMins} minutes at ${formatTime(slots[startIndex].time)}:`);
             if (alias) {
                 for(let i = 0; i < blocksNeeded; i++) {
                     slots[startIndex + i].alias = alias;
                     slots[startIndex + i].isMainSlot = (i === 0);
-                    slots[startIndex + i].isBuffer = false;
+                    slots[startIndex + i].isBlocked = false;
                 }
                 if (requiresBuffer) {
                     slots[startIndex + blocksNeeded].alias = 'BUFFER';
                     slots[startIndex + blocksNeeded].isMainSlot = false;
+                    slots[startIndex + blocksNeeded].isBlocked = false;
                     slots[startIndex + blocksNeeded].isBuffer = true;
+                }
+                render();
+            }
+        }
+
+        // CLIENT: Simulates a direct database write to the VPS
+        function processClientRequest(requestedMins) {
+            const startIndex = pendingStartIndex;
+            let slots = masterScheduleDB[activeDate];
+            const blocksNeeded = requestedMins / baseIncrement;
+            let requiresBuffer = (startIndex + blocksNeeded < slots.length);
+            let totalBlocksNeeded = requiresBuffer ? blocksNeeded + 1 : blocksNeeded;
+
+            if (startIndex + totalBlocksNeeded > slots.length) return alert("Not enough time left in day for that duration."), closeModal();
+
+            for(let i = 0; i < totalBlocksNeeded; i++) {
+                if (slots[startIndex + i].alias !== null || slots[startIndex + i].isBlocked) return alert("This time is no longer available."), closeModal();
+            }
+
+            const timeStr = formatTime(slots[startIndex].time);
+            
+            document.getElementById('clientRequestContent').innerHTML = `
+                <h3 style="color: #fff; margin-top: 0;"><span class="pink-gem">💎</span> Confirm Booking</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0; margin-bottom: 15px;">Securely lock in this time slot on the central database.</p>
+                <div style="background: rgba(236,72,153,0.1); border: 1px solid rgba(236,72,153,0.3); border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                    <p style="color: #fdf4ff; margin: 0; font-weight: 600;">${activeDate} @ ${timeStr}</p>
+                    <p style="color: #f472b6; margin: 5px 0 0 0; font-size: 0.85rem;">Duration: ${durationLabels[requestedMins]}</p>
+                </div>
+                <input type="text" id="clientAliasInput" placeholder="Enter your alias..." style="width: 100%; box-sizing: border-box; margin-bottom: 15px; text-align: center;">
+                <button class="btn-action" style="display:block; margin-bottom: 10px; width: 100%; box-sizing: border-box; background: linear-gradient(135deg, #ec4899, #9333ea);" onclick="confirmClientDBBooking(${startIndex}, ${blocksNeeded}, ${requiresBuffer})">🔒 Lock Slot</button>
+                <button class="btn-cancel-modal" onclick="document.getElementById('clientRequestModal').style.display='none'">Cancel</button>
+            `;
+
+            closeModal();
+            document.getElementById('clientRequestModal').style.display = 'flex';
+        }
+
+        // Executes the simulated client database lock
+        function confirmClientDBBooking(startIndex, blocksNeeded, requiresBuffer) {
+            const alias = document.getElementById('clientAliasInput').value.trim();
+            if(!alias) return alert("Please enter your alias to lock the slot.");
+
+            let slots = masterScheduleDB[activeDate];
+
+            // Double check availability (simulating DB concurrency check)
+            let totalNeeded = requiresBuffer ? blocksNeeded + 1 : blocksNeeded;
+            for(let i = 0; i < totalNeeded; i++) {
+                if (slots[startIndex + i].alias !== null || slots[startIndex + i].isBlocked) {
+                    document.getElementById('clientRequestModal').style.display = 'none';
+                    return alert("Sorry, this slot was just taken. Please select another.");
+                }
+            }
+
+            for(let i = 0; i < blocksNeeded; i++) {
+                slots[startIndex + i].alias = alias;
+                slots[startIndex + i].isMainSlot = (i === 0);
+            }
+            if (requiresBuffer) {
+                slots[startIndex + blocksNeeded].alias = 'BUFFER';
+                slots[startIndex + blocksNeeded].isMainSlot = false;
+                slots[startIndex + blocksNeeded].isBuffer = true;
+            }
+
+            document.getElementById('clientRequestModal').style.display = 'none';
+            alert("Slot successfully locked in the database.");
+            render();
+        }
+
+        function delayClient(targetAlias) {
+            let slots = masterScheduleDB[activeDate];
+            let mainIndex = slots.findIndex(s => s.alias === targetAlias && s.isMainSlot);
+            if (mainIndex === -1) return;
+
+            let blockCount = 0;
+            for (let i = mainIndex; i < slots.length; i++) {
+                if (slots[i].alias === targetAlias || slots[i].isBuffer) blockCount++; else break;
+            }
+
+            if (mainIndex + blockCount >= slots.length) return alert("Cannot delay: Client is at day boundary.");
+
+            let oldTimes = [];
+            for (let i = 0; i < blockCount; i++) {
+                oldTimes.push({ alias: slots[mainIndex + i].alias, isMain: slots[mainIndex + i].isMainSlot, isBuf: slots[mainIndex + i].isBuffer });
+                slots[mainIndex + i].alias = null;
+                slots[mainIndex + i].isMainSlot = false;
+                slots[mainIndex + i].isBuffer = false;
+            }
+
+            for (let i = 0; i < blockCount; i++) {
+                slots[mainIndex + 1 + i].alias = oldTimes[i].alias;
+                slots[mainIndex + 1 + i].isMainSlot = oldTimes[i].isMain;
+                slots[mainIndex + 1 + i].isBuffer = oldTimes[i].isBuf;
+                slots[mainIndex + 1 + i].isBlocked = false;
+            }
+            
+            navigator.clipboard.writeText(templates.delay.replace('{time}', formatTime(slots[mainIndex + 1].time))).then(() => {
+                alert(`Client pushed +15 mins.\nCopied text to clipboard!`);
+                render();
+            });
+        }
+
+        function openMoveModal(targetAlias) {
+            activeMovingAlias = targetAlias;
+            document.getElementById('moveClientSubtitle').innerText = `Rescheduling booking for [${targetAlias}] on ${activeDate}`;
+            let slots = masterScheduleDB[activeDate];
+            const moveGrid = document.getElementById('moveGrid');
+            moveGrid.innerHTML = '';
+
+            slots.forEach((slot, index) => {
+                if (!slot.alias && !slot.isBlocked) {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-duration';
+                    btn.style.width = '100%';
+                    btn.innerText = `Move to ${formatTime(slot.time)}`;
+                    btn.onclick = () => executeMove(index);
+                    moveGrid.appendChild(btn);
+                }
+            });
+            document.getElementById('moveModal').style.display = 'flex';
+        }
+
+        function closeMoveModal() { document.getElementById('moveModal').style.display = 'none'; activeMovingAlias = null; }
+
+        function executeMove(newStartIndex) {
+            let targetAlias = activeMovingAlias;
+            let slots = masterScheduleDB[activeDate];
+            let mainIndex = slots.findIndex(s => s.alias === targetAlias && s.isMainSlot);
+            if (mainIndex === -1) { closeMoveModal(); return; }
+
+            let clientBlocks = [];
+            let hasBuffer = false;
+            for (let i = mainIndex; i < slots.length; i++) {
+                if (slots[i].alias === targetAlias) clientBlocks.push({ isMain: slots[i].isMainSlot });
+                else if (slots[i].isBuffer) { hasBuffer = true; break; }
+                else break;
+            }
+
+            let totalNeeded = hasBuffer ? clientBlocks.length + 1 : clientBlocks.length;
+            if (newStartIndex + totalNeeded > slots.length) return alert("Not enough room.");
+
+            for (let i = 0; i < totalNeeded; i++) {
+                let checkIdx = newStartIndex + i;
+                if ((slots[checkIdx].alias !== null && slots[checkIdx].alias !== targetAlias) || slots[checkIdx].isBlocked) return alert("Overlap detected.");
+            }
+
+            for (let i = 0; i < slots.length; i++) {
+                if (slots[i].alias === targetAlias || (slots[i].isBuffer && i > mainIndex && i <= mainIndex + clientBlocks.length + 1)) {
+                    slots[i].alias = null; slots[i].isMainSlot = false; slots[i].isBuffer = false;
+                }
+            }
+
+            for (let i = 0; i < clientBlocks.length; i++) {
+                slots[newStartIndex + i].alias = targetAlias;
+                slots[newStartIndex + i].isMainSlot = clientBlocks[i].isMain;
+                slots[newStartIndex + i].isBlocked = false;
+            }
+            if (hasBuffer && newStartIndex + clientBlocks.length < slots.length) {
+                slots[newStartIndex + clientBlocks.length].alias = 'BUFFER';
+                slots[newStartIndex + clientBlocks.length].isMainSlot = false;
+                slots[newStartIndex + clientBlocks.length].isBuffer = true;
+                slots[newStartIndex + clientBlocks.length].isBlocked = false;
+            }
+
+            closeMoveModal();
+            render();
+            alert(`Rescheduled [${targetAlias}] to ${formatTime(slots[newStartIndex].time)}`);
+        }
+
+        function cancelBooking(targetAlias) {
+            if(confirm(`Are you sure you want to delete the booking for [${targetAlias}]?`)) {
+                let slots = masterScheduleDB[activeDate];
+                let clearing = false;
+                for (let i = 0; i < slots.length; i++) {
+                    if (slots[i].alias === targetAlias) {
+                        slots[i].alias = null; slots[i].isMainSlot = false; clearing = true;
+                    } else if (clearing && slots[i].isBuffer) {
+                        slots[i].alias = null; slots[i].isBuffer = false; break;
+                    } else if (clearing) break;
                 }
                 render();
             }
@@ -609,17 +909,29 @@
         function render() {
             const grid = document.getElementById('grid');
             grid.innerHTML = ''; 
+            let slots = masterScheduleDB[activeDate];
 
-            if(slots.length === 0) {
-                grid.innerHTML = '<p style="text-align:center; color:var(--text-dim); padding: 20px;">No schedule initialized. Set your day above.</p>';
-                return;
-            }
+            updateGiftTotal();
+
+            let visibleSlots = false;
 
             slots.forEach((slot, index) => {
+                if (currentView === 'client' && slot.isBlocked) return;
                 if (currentView === 'client' && slot.alias) return;
 
+                if (slot.isBlocked && currentView === 'admin' && !showBlockedAdmin) return;
+
+                visibleSlots = true;
                 const div = document.createElement('div');
                 
+                if (slot.isBlocked && currentView === 'admin') {
+                    div.className = 'slot blocked';
+                    div.innerHTML = `<div class="slot-header"><span>${formatTime(slot.time)}</span><span style="color:#6b7280; font-size:0.85rem;">🌑 Shadow Blocked</span></div>`;
+                    div.onclick = () => handleSlotClick(index);
+                    grid.appendChild(div);
+                    return;
+                }
+
                 if (slot.isBuffer && currentView === 'admin') {
                     div.className = 'slot buffer';
                     div.innerText = '🧹 15m Private Transition Buffer';
@@ -643,7 +955,7 @@
                 const hasNote = clientNotesDB[slot.alias] ? '<span class="has-note">📝 Notes</span>' : '';
                 const statusText = document.createElement('span');
                 statusText.style.fontWeight = '500';
-                statusText.innerHTML = slot.alias ? `Booked: ${slot.alias} ${currentView === 'admin' ? hasNote : ''}` : '💎 Available';
+                statusText.innerHTML = slot.alias ? `Booked: ${slot.alias} ${currentView === 'admin' ? hasNote : ''}` : '<span class="pink-gem">💎</span> Available';
 
                 headerDiv.appendChild(timeText);
                 headerDiv.appendChild(statusText);
@@ -687,14 +999,33 @@
                     div.appendChild(actionsDiv);
                 }
 
-                if (!slot.alias) div.onclick = () => openDurationModal(index);
+                if (!slot.alias) {
+                    div.onclick = () => {
+                        if (currentView === 'admin') handleSlotClick(index);
+                        else openDurationModal(index);
+                    };
+                }
+                
                 grid.appendChild(div);
             });
+
+            if(!visibleSlots && currentView === 'admin') {
+                grid.innerHTML = `<p style="text-align:center; color:var(--text-dim); padding: 20px;">All times are hidden by default.<br>Toggle '👁️ Show Shaded Times' or use the sculpting tool above to reveal slots.</p>`;
+            } else if(!visibleSlots && currentView === 'client') {
+                grid.innerHTML = `<p style="text-align:center; color:var(--text-dim); padding: 20px;">No available slots for this date.</p>`;
+            }
         }
 
-        function wipeShift() {
-            if (confirm("WARNING: End shift and erase all data?")) {
-                slots = slots.map(slot => ({ ...slot, alias: null, isMainSlot: false, isBuffer: false }));
+        function clearDayBookings() {
+            if (confirm(`WARNING: Clear all bookings for ${activeDate}? (Shaded times will remain)`)) {
+                let slots = masterScheduleDB[activeDate];
+                slots.forEach(slot => {
+                    if (!slot.isBlocked) {
+                        slot.alias = null;
+                        slot.isMainSlot = false;
+                        slot.isBuffer = false;
+                    }
+                });
                 render();
             }
         }
